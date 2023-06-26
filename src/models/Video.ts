@@ -17,6 +17,7 @@ class Video {
     public cId: number,
     public url: string,
     public owner: UpUser = null ,
+    public videos: number = 1,
     public twoLevel: PartitionType = null,
     public oneLevel: PartitionType = null) {}
 }
@@ -34,8 +35,28 @@ function createVideo(data): Video {
     data.cid,
     data.initUrl,
     new UpUser(data.owner.mid, data.owner.name, data.owner.face),
+    data.videos,
     data.tid ? new PartitionType(data.tid, data.tname) : null,
     data.reid ? new PartitionType(data.reid, data.toptype) : null
+  );
+}
+
+function createVideo2(data, father): Video {
+  return new Video(
+    father.aid,
+    data.part,
+    father.pic,
+    father.desc,
+    father.stat.view,
+    father.stat.danmaku,
+    father.pubdate,
+    data.duration,
+    data.cid,
+    father.initUrl,
+    new UpUser(father.owner.mid, father.owner.name, father.owner.face),
+    father.videos,
+    father.tid ? new PartitionType(father.tid, father.tname) : null,
+    father.reid ? new PartitionType(father.reid, father.toptype) : null
   );
 }
 
@@ -52,6 +73,7 @@ function createVideoByDetail(data): Video {
     data.cid,
     "",
     new UpUser(data.owner.mid, data.owner.name, data.owner.face),
+    data.videos,
     data.tid ? new PartitionType(data.tid, data.tname) : null,
     // data.reid ? new PartitionType(data.reid, data.toptype) : null
   );
@@ -69,7 +91,8 @@ function createVideoByRanking(data): Video {
     data.duration,
     0,
     "",
-    new UpUser(0, data.author, "")
+    new UpUser(0, data.author, ""),
+    data.videos
   );
 }
 
@@ -126,6 +149,7 @@ function createVideoBySearch(data): Video {
 export {
   Video,
   createVideo,
+  createVideo2,
   createVideoByDetail,
   createVideoByRanking,
   createVideoByLatest,

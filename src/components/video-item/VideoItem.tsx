@@ -15,7 +15,7 @@ const VideoItem = (props: VideoItemProps) => {
   const { video, showStatistics } =  props;
   return (
     <div className={style.video}>
-      <a className={style.videoLink} href={"/video/av" + video.aId}>
+      <a className={style.videoLink} href={ "/video/av" + video.aId }>
         <div className={style.imageContainer}>
           <div className={style.imageWrapper}>
             <img className={style.tv} src={tv} />

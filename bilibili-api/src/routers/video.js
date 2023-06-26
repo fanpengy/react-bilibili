@@ -3,6 +3,7 @@ const {
   fetchVideoDetail,
   fetchPlayUrl,
   fetchRecommendById,
+  fetchPackageById,
   fetchReplay,
   fetchBarrage
 } = require("../api");
@@ -49,7 +50,7 @@ router.get("/av/play_url", (req, res, next) => {
 });
 
 router.get("/av/recommend/:aId", (req, res, next) => {
-  fetchRecommendById(req.params.aId).then((data) => {
+  fetchPackageById(req.params.aId).then((data) => {
     let resData = {
       code: "1",
       msg: "success"

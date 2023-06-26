@@ -18,6 +18,8 @@ const URL_VIDEO_DETAIL = "https://api.bilibili.com/x/web-interface/view?aid={aid
 // 详情推荐
 // const URL_RECOMMEND = "https://comment.bilibili.com/recommendnew,{aid}";
 const URL_RECOMMEND = "https://api.bilibili.com/x/web-interface/archive/related?aid={aid}&context=";
+
+const URL_PACKAGE = "https://api.bilibili.com/x/web-interface/view?aid={aid}&bvid=";
 // 视频播放地址
 const URL_PLAY_URL = "https://api.bilibili.com/x/player/playurl?cid={cid}&avid={aid}&platform=html5&otype=json&qn=16&type=mp4&html5=1";
 // 详情弹幕
@@ -114,6 +116,12 @@ const fetchPlayUrl = (aId, cId) => {
 
 const fetchRecommendById = (aId) => {
   return fetch(URL_RECOMMEND.replace("{aid}", aId))
+    .then(res => res.json())
+    .then(json => json);
+}
+
+const fetchPackageById = (aId) => {
+  return fetch(URL_PACKAGE.replace("{aid}", aId))
     .then(res => res.json())
     .then(json => json);
 }
@@ -237,6 +245,7 @@ module.exports = {
   fetchVideoDetail,
   fetchPlayUrl,
   fetchRecommendById,
+  fetchPackageById,
   fetchReplay,
   fetchBarrage,
   fetchUserVideo,

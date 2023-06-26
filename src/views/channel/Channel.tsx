@@ -212,7 +212,7 @@ class Channel extends React.Component<ChannelProps, ChannelState> {
     const tabBarData = [{ id: 0, name: "首页", children: []} as PartitionType]
       .concat(partitions);
 
-    tabBarData.push(new PartitionType(-1, "直播"));
+    // tabBarData.push(new PartitionType(-1, "直播"));
 
     let currentTabIndex = tabBarData.findIndex((parittion) =>
       parittion.id === parseInt(m.params.rId, 10)
@@ -288,7 +288,7 @@ class Channel extends React.Component<ChannelProps, ChannelState> {
           {/* 分类推荐 */}
           <div className={style.recommend}>
             <div className={style.title}>热门推荐</div>
-            {
+            {/* {
               isOneLevelAndChildrenGtTwo === true ? (
                 <div className={style.ranking} onClick={() => { this.handleRankingClick(this.currentPartition) }}>
                   <i className={`${style.iconRanking} icon-ranking`} />
@@ -296,7 +296,7 @@ class Channel extends React.Component<ChannelProps, ChannelState> {
                   <i className={`${style.iconRight} icon-arrow-right`} />
                 </div>
               ) : null
-            }
+            } */}
             <div className={style.recommendContent + " clear"}>
               {
                 this.state.recommendVideos.map((video, i) => {

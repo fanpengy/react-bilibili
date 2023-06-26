@@ -27,19 +27,81 @@ router.get("/ranking/partitions", (req, res, next) => {
 router.get("/ranking/region", (req, res, next) => {
   const rId = req.query.rId;
   const day = req.query.day;
-  fetchRankingRegionById(rId, day).then((data) => {
+  if (rId == 1) {
     let resData = {
       code: "1",
       msg: "success"
     }
-    if (data.code === 0) {
-      resData.data = data.data;
-    } else {
-      resData.code = "0";
-      resData.msg = "fail";
-    }
+    resData.data = [
+      /*
+      {
+        aid: ,
+        title: "",
+        play: 0,
+        pic: "",
+        video_review: ,
+        duration: ,
+        author: ""
+      }
+      */
+      {
+        aid: 267981866,
+        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
+        play: 63550,
+        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
+        video_review: 199,
+        duration: 18293,
+        author: "复利的奇迹ETF基金理财",
+        videos: 21
+      },
+      {
+        aid: 267981866,
+        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
+        play: 63550,
+        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
+        video_review: 199,
+        duration: 18293,
+        author: "复利的奇迹ETF基金理财",
+        videos: 21
+      },
+      {
+        aid: 267981866,
+        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
+        play: 63550,
+        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
+        video_review: 199,
+        duration: 18293,
+        author: "复利的奇迹ETF基金理财",
+        videos: 21
+      },
+      {
+        aid: 267981866,
+        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
+        play: 63550,
+        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
+        video_review: 199,
+        duration: 18293,
+        author: "复利的奇迹ETF基金理财",
+        videos: 21
+      }
+    ]
     res.send(resData);
-  }).catch(next);
+  } else {
+    fetchRankingRegionById(rId, day).then((data) => {
+      let resData = {
+        code: "1",
+        msg: "success"
+      }
+      if (data.code === 0) {
+        resData.data = data.data;
+      } else {
+        resData.code = "0";
+        resData.msg = "fail";
+      }
+      res.send(resData);
+    }).catch(next);
+  }
+  
 });
 
 router.get("/ranking/archive", (req, res, next) => {

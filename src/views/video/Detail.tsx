@@ -7,7 +7,7 @@ import Header from "../../components/header/Header";
 import ScrollToTop from "../../components/scroll-to-top/ScrollToTop";
 import Context from "../../context";
 import VideoPlayer from "./VideoPlayer";
-import { Video, createVideo, UpUser } from "../../models";
+import { Video, createVideo, createVideo2, UpUser } from "../../models";
 import { formatTenThousand, formatDuration } from "../../util/string";
 import { getRecommendVides, getComments } from "../../api/video";
 import { getPicSuffix } from "../../util/image";
@@ -107,7 +107,8 @@ class Detail extends React.Component<DetailProps, DetailState> {
   private getRecommentVides() {
     getRecommendVides(this.props.match.params.aId).then((result) => {
       if (result.code === "1") {
-        const recommendVides = result.data.map((item) => createVideo(item));
+        const video = result.data
+        const recommendVides = result.data.pages.map((item) => createVideo2(item, video));
         this.setState({
           loading: false,
           recommendVides
@@ -230,9 +231,10 @@ class Detail extends React.Component<DetailProps, DetailState> {
                 {video.title}
               </div>
               <div className={style.videoInfo}>
-                <Link to={"/space/" + video.owner.mId}>
+                {/* <Link to={"/space/" + video.owner.mId}>
                   <span className={style.upUserName}>{video.owner.name}</span>
-                </Link>
+                </Link> */}
+                <span className={style.upUserName}>{video.owner.name}</span>
                 <span className={style.play}>{formatTenThousand(video.playCount)}次观看</span>
                 <span>{formatTenThousand(video.barrageCount)}弹幕</span>
                 <span>{getPubdate(video.publicDate)}</span>
@@ -252,11 +254,12 @@ class Detail extends React.Component<DetailProps, DetailState> {
             </div>
           </div>
           {/* 推荐列表 */}
-          <div className={style.recommendList}>
+          { this.props.video.videos > 1 ?
+          (<div className={style.recommendList}>
             {
               this.state.recommendVides.map((v) => (
-                <div className={style.videoWrapper} key={v.aId}>
-                  <a href={"/video/av" + v.aId}>
+                <div className={style.videoWrapper} key={v.cId}>
+                  <a href={"/video/cv" + v.cId + "/av" + v.aId}>
                     <div className={style.imageContainer}>
                       <LazyLoad height="10.575rem">
                         <img src={this.getPicUrl(v.pic, "@320w_200h")} alt={v.title} />
@@ -264,7 +267,7 @@ class Detail extends React.Component<DetailProps, DetailState> {
                       <div className={style.duration}>{formatDuration(v.duration, "0#:##:##")}</div>
                     </div>
                     <div className={style.infoWrapper}>
-                      <div className={style.title}>
+                      <div className={v.cId == video.cId ? style.titlePlaying : style.title}>
                         {v.title}
                       </div>
                       <div className={style.upUser}>
@@ -287,7 +290,7 @@ class Detail extends React.Component<DetailProps, DetailState> {
                 <div className={style.loading}>加载中...</div>
               ) : null
             }
-          </div>
+          </div>) : null }
           {
             this.state.comments.length > 0 ? (
               <div className={style.comment}>
@@ -298,17 +301,22 @@ class Detail extends React.Component<DetailProps, DetailState> {
                 {
                   this.state.comments.map((comment, i) => (
                     <div className={style.commentWrapper}  key={i}>
-                      <Link to={"/space/" + comment.user.mId}>
+                      {/* <Link to={"/space/" + comment.user.mId}>
                         <LazyLoad height="2rem">
                           <img className={style.commentUpPic} src={this.getPicUrl(comment.user.face, "@60w_60h")}
                             alt={comment.user.name}/>
                         </LazyLoad>
-                      </Link>
+                      </Link> */}
+                      <LazyLoad height="2rem">
+                        <img className={style.commentUpPic} src={this.getPicUrl(comment.user.face, "@60w_60h")}
+                          alt={comment.user.name}/>
+                      </LazyLoad>
                       <span className={style.commentTime}>{comment.date}</span>
                       <div className={style.commentUpUser}>
-                        <Link to={"/space/" + comment.user.mId}>
+                        {/* <Link to={"/space/" + comment.user.mId}>
                           {comment.user.name}
-                        </Link>
+                        </Link> */}
+                        {comment.user.name}
                       </div>
                       <div className={style.commentContent}>
                         {comment.content}

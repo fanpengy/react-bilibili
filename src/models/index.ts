@@ -8,6 +8,7 @@ export {
 export {
   Video,
   createVideo,
+  createVideo2,
   createVideoByRanking,
   createVideoByLatest,
   createVideoByUser,
