@@ -259,7 +259,7 @@ class Detail extends React.Component<DetailProps, DetailState> {
             {
               this.state.recommendVides.map((v) => (
                 <div className={style.videoWrapper} key={v.cId}>
-                  <a href={"/video/cv" + v.cId + "/av" + v.aId}>
+                  <a href={"/video/" + v.aId + "/" + v.cId}>
                     <div className={style.imageContainer}>
                       <LazyLoad height="10.575rem">
                         <img src={this.getPicUrl(v.pic, "@320w_200h")} alt={v.title} />

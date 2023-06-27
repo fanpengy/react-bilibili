@@ -1,4 +1,8 @@
 const express = require("express");
+const db = require('../db/index')
+const log4js = require("../log4js");
+
+const logger = log4js.getLogger('test');
 const {
   fetchRankingById,
   fetchRankingRegionById,
@@ -27,6 +31,26 @@ router.get("/ranking/partitions", (req, res, next) => {
 router.get("/ranking/region", (req, res, next) => {
   const rId = req.query.rId;
   const day = req.query.day;
+  db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, 0, owner_name as author ' + 
+    'from video where tid = ' + rId, (err, data) => {
+    let resData = {
+      code: "1",
+      msg: "success"
+    }
+    if (err) {
+      logger.error(err)
+      resData.code = "0";
+      resData.msg = "fail";
+    } else {
+      resData.data = data;
+    }
+    res.send(resData);
+  })
+});
+
+router.get("/ranking/regions", (req, res, next) => {
+  const rId = req.query.rId;
+  const day = req.query.day;
   if (rId == 1) {
     let resData = {
       code: "1",
@@ -52,7 +76,6 @@ router.get("/ranking/region", (req, res, next) => {
         video_review: 199,
         duration: 18293,
         author: "复利的奇迹ETF基金理财",
-        videos: 21
       },
       {
         aid: 267981866,
@@ -62,7 +85,6 @@ router.get("/ranking/region", (req, res, next) => {
         video_review: 199,
         duration: 18293,
         author: "复利的奇迹ETF基金理财",
-        videos: 21
       },
       {
         aid: 267981866,
@@ -72,7 +94,6 @@ router.get("/ranking/region", (req, res, next) => {
         video_review: 199,
         duration: 18293,
         author: "复利的奇迹ETF基金理财",
-        videos: 21
       },
       {
         aid: 267981866,
@@ -82,7 +103,6 @@ router.get("/ranking/region", (req, res, next) => {
         video_review: 199,
         duration: 18293,
         author: "复利的奇迹ETF基金理财",
-        videos: 21
       }
     ]
     res.send(resData);

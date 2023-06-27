@@ -42,7 +42,7 @@ const router = [
     }
   },
   {
-    path: "/video/cv:cId/av:aId",
+    path: "/video/:aId/:cId",
     component: loadable(() => import(/* webpackChunkName: 'video' */ "../containers/Video")),
     asyncData: (store, param) => {
       return store.dispatch(getVideoInfo(param.aId, param.cId))

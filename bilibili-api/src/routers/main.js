@@ -130,10 +130,10 @@ const partitionData2 = {
 
 const partitionData = {
   0: [
-    {tid: 1, typename: "财经商业"},{tid: 2, typename: "社科-法律"}
+    {tid: 1, typename: "计算机"},{tid: 2, typename: "社科-法律"}
   ],
   1: [
-    {tid: 51, typename: "理财"},{tid: 12, typename: "金融"}
+    {tid: 11, typename: "理财"},{tid: 12, typename: "金融"}
   ],
   2: [
     {tid: 21, typename: "法律"}
