@@ -209,7 +209,9 @@ class Channel extends React.Component<ChannelProps, ChannelState> {
     const { partitions, match: m } = this.props;
 
     // 一级分类
-    const tabBarData = [{ id: 0, name: "首页", children: []} as PartitionType]
+    // const tabBarData = [{ id: 0, name: "首页", children: []} as PartitionType]
+    //   .concat(partitions);
+    const tabBarData = []
       .concat(partitions);
 
     // tabBarData.push(new PartitionType(-1, "直播"));

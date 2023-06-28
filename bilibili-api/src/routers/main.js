@@ -141,7 +141,7 @@ const partitionData = {
     {tid: 21, typename: "法律"},{tid: 22, typename: "心理学"},{tid: 23, typename: "社会学"}
   ],
   3: [
-    {tid: 31, typename: "理财"}, {tid: 32, typename: "股票"}, {tid: 33, typename: "金融"}, {tid: 34, typename: "商业"}
+    {tid: 31, typename: "理财"}, {tid: 32, typename: "股票"}, {tid: 33, typename: "商业"}
   ],
   4: [
     {tid: 41, typename: "乐理"}, {tid: 42, typename: "乐器"}, {tid: 43, typename: "音乐制作"}

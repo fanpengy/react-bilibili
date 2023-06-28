@@ -7,7 +7,7 @@ import style from "./header.styl?css-modules";
 const Header = () => {
   return (
     <div className={style.header}>
-      <a className={style.logo} href="/index">
+      <a className={style.logo} href="/channel/1">
         <Logo />
       </a>
       {/* <a className={style.avatar} href="/space"> */}

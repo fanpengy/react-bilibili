@@ -24,7 +24,7 @@ class App extends React.Component {
                 <NestedRoute {...route} key={i} />
               )
             }
-            <Redirect from="/" to="/index" exact={true} />
+            <Redirect from="/" to="/channel/1" exact={true} />
             <StatusRoute code={404}>
               <div>
                 <h1>Not Found</h1>

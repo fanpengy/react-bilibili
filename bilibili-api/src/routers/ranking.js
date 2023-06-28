@@ -31,8 +31,25 @@ router.get("/ranking/partitions", (req, res, next) => {
 router.get("/ranking/region", (req, res, next) => {
   const rId = req.query.rId;
   const day = req.query.day;
-  db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, 0, owner_name as author ' + 
-    'from video where tid = ' + rId + ' or reid = ' + rId, (err, data) => {
+  if (rId == 0) {
+    db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, duration, owner_name as author ' + 
+      'from video order by aId desc', (err, data) => {
+      let resData = {
+        code: "1",
+        msg: "success"
+      }
+      if (err) {
+        logger.error(err)
+        resData.code = "0";
+        resData.msg = "fail";
+      } else {
+        resData.data = data;
+      }
+      res.send(resData);
+    })
+  } else {
+    db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, duration, owner_name as author ' + 
+    'from video where tid = ' + rId + ' or reid = ' + rId + ' order by aId desc limit 6', (err, data) => {
     let resData = {
       code: "1",
       msg: "success"
@@ -46,6 +63,7 @@ router.get("/ranking/region", (req, res, next) => {
     }
     res.send(resData);
   })
+  }
 });
 
 router.get("/ranking/archive", async (req, res, next) => {
@@ -54,7 +72,7 @@ router.get("/ranking/archive", async (req, res, next) => {
   const size = 10
   const page = parseInt(p) - 1
   db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, duration, description as "desc", owner_name as author, owner_id as mid, owner_face as face, ' + 
-    'pubdate from video where reid = ' + tId + ' limit ' + (page * size) + ',' + size, (err, data) => {
+    'pubdate from video where reid = ' + tId + ' order by pubdate limit ' + (page * size) + ',' + size, (err, data) => {
     let resData = {
       code: "1",
       msg: "success",
