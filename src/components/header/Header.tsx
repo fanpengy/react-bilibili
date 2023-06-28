@@ -10,12 +10,13 @@ const Header = () => {
       <a className={style.logo} href="/index">
         <Logo />
       </a>
-      <a className={style.avatar} href="/space">
+      {/* <a className={style.avatar} href="/space"> */}
+      <a className={style.avatar}>
         <Avatar />
       </a>
-      <a className={style.searchIcon} href="/search">
+      {/* <a className={style.searchIcon} href="/search">
         <i className="icon-search" />
-      </a>
+      </a> */}
     </div>
   );
 }

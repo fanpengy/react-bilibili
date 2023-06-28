@@ -77,7 +77,7 @@ class Index extends React.Component<IndexProps> {
     const tabBarData = [{ id: 0, name: "首页"} as PartitionType]
       .concat(oneLevelPartitions);
 
-    tabBarData.push(new PartitionType(-1, "直播"));
+    // tabBarData.push(new PartitionType(-1, "直播"));
 
     let videos = rankingVideos;
     if (additionalVideos.length > 0) {

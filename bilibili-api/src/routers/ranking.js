@@ -32,7 +32,7 @@ router.get("/ranking/region", (req, res, next) => {
   const rId = req.query.rId;
   const day = req.query.day;
   db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, 0, owner_name as author ' + 
-    'from video where tid = ' + rId, (err, data) => {
+    'from video where tid = ' + rId + ' or reid = ' + rId, (err, data) => {
     let resData = {
       code: "1",
       msg: "success"
@@ -48,83 +48,55 @@ router.get("/ranking/region", (req, res, next) => {
   })
 });
 
+router.get("/ranking/archive", async (req, res, next) => {
+  let tId = req.query.tId;
+  let p = req.query.p;
+  const size = 10
+  const page = parseInt(p) - 1
+  db.query('select aId as aid, title, playCount as play, pic, barrageCount as video_review, duration, description as "desc", owner_name as author, owner_id as mid, owner_face as face, ' + 
+    'pubdate from video where reid = ' + tId + ' limit ' + (page * size) + ',' + size, (err, data) => {
+    let resData = {
+      code: "1",
+      msg: "success",
+      data: {}
+    }
+    if (err) {
+      logger.error(err)
+      resData.code = "0";
+      resData.msg = "fail";
+    } else {
+      resData.data.archives = data.map((video) => {
+        const stat = {}
+        
+        stat.view = video.play
+        stat.danmaku = video.video_review
+        video.stat = stat
+        return video
+      });
+    }
+    res.send(resData);
+  })
+});
+
 router.get("/ranking/regions", (req, res, next) => {
   const rId = req.query.rId;
   const day = req.query.day;
-  if (rId == 1) {
+  fetchRankingRegionById(rId, day).then((data) => {
     let resData = {
       code: "1",
       msg: "success"
     }
-    resData.data = [
-      /*
-      {
-        aid: ,
-        title: "",
-        play: 0,
-        pic: "",
-        video_review: ,
-        duration: ,
-        author: ""
-      }
-      */
-      {
-        aid: 267981866,
-        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
-        play: 63550,
-        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
-        video_review: 199,
-        duration: 18293,
-        author: "复利的奇迹ETF基金理财",
-      },
-      {
-        aid: 267981866,
-        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
-        play: 63550,
-        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
-        video_review: 199,
-        duration: 18293,
-        author: "复利的奇迹ETF基金理财",
-      },
-      {
-        aid: 267981866,
-        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
-        play: 63550,
-        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
-        video_review: 199,
-        duration: 18293,
-        author: "复利的奇迹ETF基金理财",
-      },
-      {
-        aid: 267981866,
-        title: "【公开课】股票、期权基础知识（全20讲）投资理财必看",
-        play: 63550,
-        pic: "http://i2.hdslb.com/bfs/archive/30e05b2cb543f0977113d47f07d85f370a656637.jpg",
-        video_review: 199,
-        duration: 18293,
-        author: "复利的奇迹ETF基金理财",
-      }
-    ]
+    if (data.code === 0) {
+      resData.data = data.data;
+    } else {
+      resData.code = "0";
+      resData.msg = "fail";
+    }
     res.send(resData);
-  } else {
-    fetchRankingRegionById(rId, day).then((data) => {
-      let resData = {
-        code: "1",
-        msg: "success"
-      }
-      if (data.code === 0) {
-        resData.data = data.data;
-      } else {
-        resData.code = "0";
-        resData.msg = "fail";
-      }
-      res.send(resData);
-    }).catch(next);
-  }
-  
+  }).catch(next);
 });
 
-router.get("/ranking/archive", (req, res, next) => {
+router.get("/ranking/archives", (req, res, next) => {
   let tId = req.query.tId;
   let p = req.query.p;
   fetchRankingArchiveById(tId, p).then((data) => {
