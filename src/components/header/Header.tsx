@@ -7,9 +7,9 @@ import style from "./header.styl?css-modules";
 const Header = () => {
   return (
     <div className={style.header}>
-      <a className={style.logo} href="/channel/1">
+      {/* <a className={style.logo} href="/channel/1">
         <Logo />
-      </a>
+      </a> */}
       {/* <a className={style.avatar} href="/space"> */}
       <a className={style.avatar}>
         <Avatar />

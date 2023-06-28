@@ -271,9 +271,10 @@ class Detail extends React.Component<DetailProps, DetailState> {
                         {v.title}
                       </div>
                       <div className={style.upUser}>
-                        <span onClick={(e) => { e.preventDefault(); this.toSpace(v.owner.mId)}}>
+                        {/* <span onClick={(e) => { e.preventDefault(); this.toSpace(v.owner.mId)}}>
                           {v.owner.name}
-                        </span>
+                        </span> */}
+                        {v.owner.name}
                       </div>
                       <div className={style.videoInfo}>
                         <span>{formatTenThousand(v.playCount)}次观看</span>
